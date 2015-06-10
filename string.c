@@ -2,20 +2,20 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-char *NS(strcpy)(char *restrict s1, const char *restrict s2)
+char *NS(strcpy)(char *__restrict s1, const char *__restrict s2)
 {
     //http://stackoverflow.com/questions/14202201/implementation-of-strcpy-function
     while ((*s1++ = *s2++));
     return s1;
 }
-char *NS(strncpy)(char *restrict s1, const char *restrict s2, size_t n)
+char *NS(strncpy)(char *__restrict s1, const char *__restrict s2, size_t n)
 {
     //http://stackoverflow.com/questions/14159625/implementation-of-strncpy
     while (n-- && (*s1++ = *s2++));
     for (; n--; *s1++ = '\0');
     return s1;
 }
-char *NS(strcat)(char *restrict s1, const char *restrict s2)
+char *NS(strcat)(char *__restrict s1, const char *__restrict s2)
 {
     while (*s1++);
     for (s1--; (*s1++ = *s2++); );

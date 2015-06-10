@@ -3,14 +3,13 @@
 
 #define NS(NAME) CAR_ ## NAME
 
-// hack to make this work on gcc
-#define restrict 
+//#define __restrict restrict
 
-char *NS(strcpy)(char *restrict s1, const char *restrict s2);
-char *NS(strncpy)(char *restrict s1, const char *restrict s2, size_t n);
+char *NS(strcpy)(char *__restrict s1, const char *__restrict s2);
+char *NS(strncpy)(char *__restrict s1, const char *__restrict s2, size_t n);
 
-char *NS(strcat)(char *restrict s1, const char *restrict s2);
-char *NS(strncat)(char *restrict s1, const char *restrict s2, size_t n);
+char *NS(strcat)(char *__restrict s1, const char *__restrict s2);
+char *NS(strncat)(char *__restrict s1, const char *__restrict s2, size_t n);
 
 int NS(strcmp)(const char *s1, const char *s2);
 int NS(strncmp)(const char *s1, const char *s2, size_t n);
