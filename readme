@@ -1,0 +1,23 @@
+
+This is my attempt at writing libc in as little lines of C as possible.
+Please forgive the very terse code.
+
+Progress:
+
+[] assert
+[] ctype
+[] errno
+[] float
+[] limits
+[] locale
+[] math
+[] setjmp
+[] signal
+[] stdarg
+[] stdef
+[] stdio
+[] stdlib
+[] string
+[] time
+
+*Note: This will probably never be finished.
