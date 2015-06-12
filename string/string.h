@@ -1,8 +1,7 @@
 
 #include <stddef.h>
 
-#define NS(NAME) CAR_ ## NAME
-
+#include "ns.h"
 //#define __restrict restrict
 
 char *NS(strcpy)(char *__restrict s1, const char *__restrict s2);
