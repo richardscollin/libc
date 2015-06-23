@@ -17,7 +17,7 @@ int NS(isalpha)(int c)
 
 int NS(iscntrl)(int c)
 {
-    return ('\0' <= c && c <= US) || c == _DEL;
+    return ('\0' <= c && c <= _US) || c == _DEL;
 }
 
 int NS(isdigit)(int c)
@@ -32,17 +32,17 @@ int NS(isgraph)(int c)
 
 int NS(islower)(int c)
 {
-    return 'a' <= c && c <= 'z'
+    return 'a' <= c && c <= 'z';
 }
 
 int NS(isprint)(int c)
 {
-    return _US < c && c < _DEL
+    return _US < c && c < _DEL;
 }
 
 int NS(ispunct)(int c)
 {
-    return isgraph(c) && !isalnum(c);
+    return NS(isgraph)(c) && !NS(isalnum)(c);
 }
 
 int NS(isspace)(int c)
@@ -52,7 +52,7 @@ int NS(isspace)(int c)
 
 int NS(isupper)(int c)
 {
-    return 'A' <= c && c <= 'Z'
+    return 'A' <= c && c <= 'Z';
 }
 
 int NS(isxdigit)(int c)

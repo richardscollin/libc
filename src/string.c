@@ -55,7 +55,7 @@ int NS(strncmp)(const char *s1, const char *s2, size_t n)
 char *NS(strchr)(const char *s, int c)
 {
     const char *res = NULL;
-    for (; (((char)c == *s) ? (res = s),0 : 1 && *s); s++);
+    for (; (((unsigned char)c == *s) ? (res = s),0 : 1 && *s); s++);
     return (char *)res;
 }
 
@@ -109,6 +109,49 @@ char *NS(strtok)(char *str, const char *delim)
 char *NS(strtok_r)(char *str, const char *delim, char **saveptr)
 {
     //TODO
+    return NULL;
+}
+
+void *NS(memcpy)(void *__restrict s1, const void *__restrict s2, size_t n)
+{
+    char *c1 = s1;
+    const char *c2 = s2;
+    while (n--)
+        *c1++ = *c2++;
+}
+
+void *NS(memmove)(void *s1, const void *s2, size_t n)
+{
+    char *c1 = s1;
+    const char *c2 = s2;
+    if (s2 > s1)
+        while (n--)
+            *c1++ = *c2++;
+    else
+        while (n--)
+            c1[n] = c2[n];
+}
+
+int  NS(memcmp)(const void *s1, const void *s2, size_t n)
+{
+    unsigned char *c1, *c2;
+    int result = 0;
+    while (n-- && (result = *c1++ - *c2++));
+    return result;
+}
+
+void *NS(memchr)(const void *s, int c, size_t n)
+{
+    const unsigned char *p = s;
+    while(n-- && (c == *p++));
+    return (c == *--p) ? (void *)p : NULL;
+}
+
+void *NS(memset)(void *s, int c, size_t n)
+{
+    unsigned char *p;
+    while (n--)
+        *p++ = (unsigned char)c;
     return NULL;
 }
 

@@ -1,3 +1,5 @@
 
 tags
 a.out
+*.o
+target/*

@@ -32,3 +32,11 @@ char *NS(strerror)(int errnum);
 char *NS(strtok)(char *str, const char *delim);
 char *NS(strtok_r)(char *str, const char *delim, char **saveptr);
 
+void *NS(memcpy)(void *__restrict, const void *__restrict, size_t);
+void *NS(memmove)(void *, const void *, size_t);
+
+int  NS(memcmp)(const void *, const void *, size_t);
+
+void *NS(memchr)(const void *, int, size_t);
+void *NS(memset)(void *, int, size_t);
+
