@@ -83,15 +83,16 @@ size_t NS(strcspn)(const char *s, const char *reject)
 
 char *NS(strpbrk)(const char *s, const char *accept)
 {
-    char c;
-    while ((c = *s++) && !NS(strchr)(accept, c));
-    return (char *)(!c ? s - 1 : NULL);
+    const char *c = s + NS(strcspn)(s, accept);
+    return (char *)((*c) ? c : NULL);
 }
 
 char *NS(strstr)(const char *haystack, const char *needle)
 {
-    //TODO
-    return NULL;
+    //Naive string search implementation
+    while(*haystack && NS(strcmp)(haystack, needle))
+        haystack++;
+    return (char *)((*haystack) ? haystack : NULL);
 }
 
 char *NS(strerror)(int errnum)
@@ -102,34 +103,55 @@ char *NS(strerror)(int errnum)
 
 char *NS(strtok)(char *str, const char *delim)
 {
-    //TODO
-    return NULL;
+    static char *saveptr = NULL;
+    if (str) {
+        saveptr = str;
+    }
+    return NS(strtok_r)(str, delim, &saveptr);
 }
 
 char *NS(strtok_r)(char *str, const char *delim, char **saveptr)
 {
-    //TODO
-    return NULL;
+    /*
+     * saveptr is used to remember where the next entry point is
+     * and to encode the end of the string.
+     *
+     * if the entry point is NULL that means we have reached the end
+     * of the string and we should return null.
+     *
+     * I still think there is an edge case I'm not considering.
+     * We could get rid of the begin variable once this is tested.
+     */
+    char *begin;
+    if (str)
+        *saveptr = str;
+    if (*saveptr)
+        return NULL;
+    (*saveptr)++;// point to next character
+    begin = *saveptr + NS(strspn)(*saveptr, delim); 
+    *saveptr = NS(strpbrk)(begin, delim);
+    if (*saveptr)
+        **saveptr = '\0';
+    return begin;
 }
 
 void *NS(memcpy)(void *__restrict s1, const void *__restrict s2, size_t n)
 {
-    char *c1 = s1;
-    const char *c2 = s2;
+    char *c1 = s1, *c2 = (char *)s2;
     while (n--)
         *c1++ = *c2++;
+    return (void *)s1;
 }
 
 void *NS(memmove)(void *s1, const void *s2, size_t n)
 {
-    char *c1 = s1;
-    const char *c2 = s2;
+    char *c1 = s1, *c2 = (char *)s2;
     if (s2 > s1)
-        while (n--)
-            *c1++ = *c2++;
+        NS(memcpy)(s1, s2, n);
     else
         while (n--)
             c1[n] = c2[n];
+    return s1;
 }
 
 int  NS(memcmp)(const void *s1, const void *s2, size_t n)
