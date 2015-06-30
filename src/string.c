@@ -5,20 +5,36 @@
 char *NS(strcpy)(char *__restrict s1, const char *__restrict s2)
 {
     //http://stackoverflow.com/questions/14202201/implementation-of-strcpy-function
+    char *c = s1;
     while ((*s1++ = *s2++));
-    return s1;
+    return c;
 }
 char *NS(strncpy)(char *__restrict s1, const char *__restrict s2, size_t n)
 {
     //http://stackoverflow.com/questions/14159625/implementation-of-strncpy
+    char *c = s1;
     while (n-- && (*s1++ = *s2++));
     for (; n--; *s1++ = '\0');
-    return s1;
+    return c;
 }
 char *NS(strcat)(char *__restrict s1, const char *__restrict s2)
 {
+    char *c = s1;
     while (*s1++);
     for (s1--; (*s1++ = *s2++); );
+    return c;
+}
+
+char *NS(strncat)(char *__restrict s1, const char *__restrict s2, size_t n)
+{
+    //written in the man page
+    size_t s1_len = strlen(s1);
+    size_t i;
+
+    for (i = 0 ; i < n && s2[i] != '\0' ; i++)
+        s1[s1_len + i] = s2[i];
+    s1[s1_len + i] = '\0';
+
     return s1;
 }
 
@@ -40,16 +56,14 @@ int NS(strcmp)(const char *s1, const char *s2)
 {
     while (*s1 && (*s1 == *s2))
         s1++,s2++;
-    return *s1 - *s2;
-    //may need a cast here to follow standard
+    return (unsigned char)*s1 - (unsigned char)*s2;
 }
 
 int NS(strncmp)(const char *s1, const char *s2, size_t n)
 {
     while (n-- && *s1 == *s2 && *s1)
         s1++,s2++;
-    return *s1 - *s2;
-    //may need a cast here to follow standard
+    return (unsigned char)*s1 - (unsigned char)*s2;
 }
 
 char *NS(strchr)(const char *s, int c)
@@ -156,24 +170,24 @@ void *NS(memmove)(void *s1, const void *s2, size_t n)
 
 int  NS(memcmp)(const void *s1, const void *s2, size_t n)
 {
-    unsigned char *c1, *c2;
+    unsigned const char *c1 = s1, *c2 = s2;
     int result = 0;
-    while (n-- && (result = *c1++ - *c2++));
+    while (n-- && !(result = *c1++ - *c2++));
     return result;
 }
 
 void *NS(memchr)(const void *s, int c, size_t n)
 {
     const unsigned char *p = s;
-    while(n-- && (c == *p++));
+    while(n-- && (c != *p++));
     return (c == *--p) ? (void *)p : NULL;
 }
 
 void *NS(memset)(void *s, int c, size_t n)
 {
-    unsigned char *p;
+    unsigned char *p = s;
     while (n--)
         *p++ = (unsigned char)c;
-    return NULL;
+    return s;
 }
 

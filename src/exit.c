@@ -1,6 +1,9 @@
 
 #include <unistd.h>
 
+#include <sys/syscall.h>
+extern long __syscall();
+
 static void (*cb[_SC_ATEXIT_MAX])(void);//array of exit callbacks
 static int num_cb;//number of exit callbacks
 
@@ -17,5 +20,11 @@ void exit(int status)
         cb[i++]();//call all callbacks
     //TODO flush and close all filehandles
     _exit(status);
+}
+
+void _Noreturn _exit(int status)
+{
+    __syscall(__NR_exit, status);
+    while(1);//gets rid of spurios warning
 }
 

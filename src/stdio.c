@@ -1,9 +1,15 @@
 
 #include <unistd.h>
+#include <stdarg.h>
 #include "stdio.h"
 
-int NS(remove)(const char *filename)
+
+void NS(minprintf)(const char *restrict format, ...)
 {
-    return unlink(filename);
+    va_list ap;
+
+    int i = va_arg(ap, int);
+
+    va_end(ap);
 }
 
