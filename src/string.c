@@ -2,14 +2,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-char *NS(strcpy)(char *__restrict s1, const char *__restrict s2)
+char *strcpy(char *__restrict s1, const char *__restrict s2)
 {
     //http://stackoverflow.com/questions/14202201/implementation-of-strcpy-function
     char *c = s1;
     while ((*s1++ = *s2++));
     return c;
 }
-char *NS(strncpy)(char *__restrict s1, const char *__restrict s2, size_t n)
+char *strncpy(char *__restrict s1, const char *__restrict s2, size_t n)
 {
     //http://stackoverflow.com/questions/14159625/implementation-of-strncpy
     char *c = s1;
@@ -17,7 +17,7 @@ char *NS(strncpy)(char *__restrict s1, const char *__restrict s2, size_t n)
     for (; n--; *s1++ = '\0');
     return c;
 }
-char *NS(strcat)(char *__restrict s1, const char *__restrict s2)
+char *strcat(char *__restrict s1, const char *__restrict s2)
 {
     char *c = s1;
     while (*s1++);
@@ -25,7 +25,7 @@ char *NS(strcat)(char *__restrict s1, const char *__restrict s2)
     return c;
 }
 
-char *NS(strncat)(char *__restrict s1, const char *__restrict s2, size_t n)
+char *strncat(char *__restrict s1, const char *__restrict s2, size_t n)
 {
     //written in the man page
     size_t s1_len = strlen(s1);
@@ -38,96 +38,92 @@ char *NS(strncat)(char *__restrict s1, const char *__restrict s2, size_t n)
     return s1;
 }
 
-size_t NS(strlen)(const char *s)
+size_t strlen(const char *s)
 {
     size_t i = 0;
     while (i++,*s++);
     return i - 1;
 }
 
-size_t NS(strnlen)(char *s, size_t n)
+size_t strnlen(const char *s, size_t n)
 {
     size_t i = 0;
     while ((i++ < n) && *s++);
     return i - 1;
 }
 
-int NS(strcmp)(const char *s1, const char *s2)
+int strcmp(const char *s1, const char *s2)
 {
     for (; *s1 && (*s1 == *s2); s1++,s2++);
     return (unsigned char)*s1 - (unsigned char)*s2;
 }
 
-int NS(strncmp)(const char *s1, const char *s2, size_t n)
+int strncmp(const char *s1, const char *s2, size_t n)
 {
-    size_t i = 0;
-    if (n == 0) return 0;
-    for (; i < n && s1[i] == s2[i] && s1[i]; i++);
-    if (i == n)
-        return (unsigned char)s1[i-1] - (unsigned char)s2[i-1];
-    else
-        return (unsigned char)s1[i] - (unsigned char)s2[i];
+    if (!n--)
+        return 0;
+    for (; n && *s1++ == *s2++ && *s1; n--);
+    return *(unsigned char *)s1 - *(unsigned char *)s2;
 }
 
-char *NS(strchr)(const char *s, int c)
+char *strchr(const char *s, int c)
 {
     const char *res = NULL;
     for (; (((unsigned char)c == *s) ? (res = s),0 : 1 && *s); s++);
     return (char *)res;
 }
 
-char *NS(strrchr)(const char *s, int c)
+char *strrchr(const char *s, int c)
 {
     const char *res = NULL;
     for (; (((char)c == *s) ? (res = s),1 : 1 && *s); s++);
     return (char *)res;
 }
 
-size_t NS(strspn)(const char *s, const char *accept)
+size_t strspn(const char *s, const char *accept)
 {
     char c;
     size_t i = 0;
-    while (i++,(c = *s++) && NS(strchr)(accept, c));
+    while (i++,(c = *s++) && strchr(accept, c));
     return i - 1;
 }
-size_t NS(strcspn)(const char *s, const char *reject)
+size_t strcspn(const char *s, const char *reject)
 {
     char c;
     size_t i = 0;
-    while (i++,(c = *s++) && !NS(strchr)(reject, c));
+    while (i++,(c = *s++) && !strchr(reject, c));
     return i - 1;
 }
 
-char *NS(strpbrk)(const char *s, const char *accept)
+char *strpbrk(const char *s, const char *accept)
 {
-    const char *c = s + NS(strcspn)(s, accept);
+    const char *c = s + strcspn(s, accept);
     return (char *)((*c) ? c : NULL);
 }
 
-char *NS(strstr)(const char *haystack, const char *needle)
+char *strstr(const char *haystack, const char *needle)
 {
-    const size_t n = NS(strlen)(needle);
-    while(*haystack && NS(strncmp)(haystack, needle, n))
+    const size_t n = strlen(needle);
+    while(*haystack && strncmp(haystack, needle, n))
         haystack++;
     return (char *)((*haystack) ? haystack : NULL);
 }
 
-char *NS(strerror)(int errnum)
+char *strerror(int errnum)
 {
     //TODO
     return NULL;
 }
 
-char *NS(strtok)(char *str, const char *delim)
+char *strtok(char *str, const char *delim)
 {
     static char *saveptr = NULL;
-    if (str) {
+    if (str)
         saveptr = str;
-    }
-    return NS(strtok_r)(str, delim, &saveptr);
+    return strtok_r(str, delim, &saveptr);
 }
 
-char *NS(strtok_r)(char *str, const char *delim, char **saveptr)
+char *strtok_r(char *str, const char *delim, char **saveptr)
 {
     /*
      * saveptr is used to remember where the next entry point is
@@ -140,14 +136,14 @@ char *NS(strtok_r)(char *str, const char *delim, char **saveptr)
         *saveptr = str;
     if (!*saveptr || **saveptr == '\0')
         return NULL;
-    str = *saveptr + NS(strspn)(*saveptr, delim); 
-    *saveptr = NS(strpbrk)(str, delim);
+    str = *saveptr + strspn(*saveptr, delim); 
+    *saveptr = strpbrk(str, delim);
     if (*saveptr)
         *(*saveptr)++ = '\0';
     return str;
 }
 
-void *NS(memcpy)(void *__restrict s1, const void *__restrict s2, size_t n)
+void *memcpy(void *__restrict s1, const void *__restrict s2, size_t n)
 {
     char *c1 = s1, *c2 = (char *)s2;
     while (n--)
@@ -155,18 +151,18 @@ void *NS(memcpy)(void *__restrict s1, const void *__restrict s2, size_t n)
     return (void *)s1;
 }
 
-void *NS(memmove)(void *s1, const void *s2, size_t n)
+void *memmove(void *s1, const void *s2, size_t n)
 {
     char *c1 = s1, *c2 = (char *)s2;
     if (s2 > s1)
-        NS(memcpy)(s1, s2, n);
+        memcpy(s1, s2, n);
     else
         while (n--)
             c1[n] = c2[n];
     return s1;
 }
 
-int  NS(memcmp)(const void *s1, const void *s2, size_t n)
+int memcmp(const void *s1, const void *s2, size_t n)
 {
     unsigned const char *c1 = s1, *c2 = s2;
     int result = 0;
@@ -174,18 +170,17 @@ int  NS(memcmp)(const void *s1, const void *s2, size_t n)
     return result;
 }
 
-void *NS(memchr)(const void *s, int c, size_t n)
+void *memchr(const void *s, int c, size_t n)
 {
     const unsigned char *p = s;
     while(n-- && (c != *p++));
     return (c == *--p) ? (void *)p : NULL;
 }
 
-void *NS(memset)(void *s, int c, size_t n)
+void *memset(void *s, int c, size_t n)
 {
     unsigned char *p = s;
     while (n--)
         *p++ = (unsigned char)c;
     return s;
 }
-

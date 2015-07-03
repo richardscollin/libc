@@ -15,7 +15,7 @@ DESTDIR = target/
 MACHINE = x86_64
 LIBNAME = libc.a
 
-all: test
+all: test stats
 
 test: lib
 	$(CC) $(CFLAGS) test.c $(LIBNAME) -o a.out
@@ -23,8 +23,13 @@ test: lib
 lib: $(addprefix $(DESTDIR), $(objects)) 
 	$(AR) -rcs $(LIBNAME) $^
 
-.PHONY: dir
+.PHONY: stats
+stats: lib
+	wc -l src/string.c
+	du -h libc.a
 
+
+.PHONY: dir
 dir:
 	mkdir -p $(DESTDIR)
 

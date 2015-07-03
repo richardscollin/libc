@@ -1,5 +1,4 @@
 
-#include "ns.h"
 #include "common/null.h"
 #include "common/size_t.h"
 
@@ -27,6 +26,6 @@
 
 #define BUFSIZ 256
 
-int NS(remove)(const char *filename);
+int remove(const char *filename);
 
 

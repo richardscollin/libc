@@ -1,42 +1,75 @@
 
 #include <stddef.h>
+#include <locale.h>
 
-#include "ns.h"
-//#define __restrict restrict
+#define __CX
+//#define __XSI
 
-char *NS(strcpy)(char *__restrict s1, const char *__restrict s2);
-char *NS(strncpy)(char *__restrict s1, const char *__restrict s2, size_t n);
+#ifdef __XSI
+void    *memccpy(void *__restrict, const void *__restrict, int, size_t);
+#endif
 
-char *NS(strcat)(char *__restrict s1, const char *__restrict s2);
-char *NS(strncat)(char *__restrict s1, const char *__restrict s2, size_t n);
+void    *memchr(const void *, int, size_t);
+int      memcmp(const void *, const void *, size_t);
+void    *memcpy(void *__restrict, const void *__restrict, size_t);
+void    *memmove(void *, const void *, size_t);
+void    *memset(void *, int, size_t);
 
-int NS(strcmp)(const char *s1, const char *s2);
-int NS(strncmp)(const char *s1, const char *s2, size_t n);
+#ifdef __CX
+char    *stpcpy(char *__restrict, const char *__restrict);
+char    *stpncpy(char *__restrict, const char *__restrict, size_t);
+#endif
 
-char *NS(strchr)(const char *s, int c);
-char *NS(strrchr)(const char *s, int c);
+char    *strcat(char *__restrict, const char *__restrict);
+char    *strchr(const char *, int);
+int      strcmp(const char *, const char *);
+int      strcoll(const char *, const char *);
 
+#ifdef __CX
+int      strcoll_l(const char *, const char *, locale_t);
+#endif
 
-size_t NS(strspn)(const char *s, const char *accept);
-size_t NS(strcspn)(const char *s, const char *reject);
+char    *strcpy(char *__restrict, const char *__restrict);
+size_t   strcspn(const char *, const char *);
 
-char *NS(strpbrk)(const char *s, const char *accept);
+#ifdef __CX
+char    *strdup(const char *);
+#endif
 
-char *NS(strstr)(const char *haystack, const char *needle);
+char    *strerror(int);
 
-size_t NS(strlen)(const char *s);
-size_t NS(strnlen)(char *s, size_t n);
+#ifdef __CX
+char    *strerror_l(int, locale_t);
+int      strerror_r(int, char *, size_t);
+#endif
 
-char *NS(strerror)(int errnum);
+size_t   strlen(const char *);
+char    *strncat(char *__restrict, const char *__restrict, size_t);
+int      strncmp(const char *, const char *, size_t);
+char    *strncpy(char *__restrict, const char *__restrict, size_t);
 
-char *NS(strtok)(char *str, const char *delim);
-char *NS(strtok_r)(char *str, const char *delim, char **saveptr);
+#ifdef __CX
+char    *strndup(const char *, size_t);
+size_t   strnlen(const char *, size_t);
+#endif
 
-void *NS(memcpy)(void *__restrict, const void *__restrict, size_t);
-void *NS(memmove)(void *, const void *, size_t);
+char    *strpbrk(const char *, const char *);
+char    *strrchr(const char *, int);
 
-int  NS(memcmp)(const void *, const void *, size_t);
+#ifdef __CX
+char    *strsignal(int);
+#endif
 
-void *NS(memchr)(const void *, int, size_t);
-void *NS(memset)(void *, int, size_t);
+size_t   strspn(const char *, const char *);
+char    *strstr(const char *, const char *);
+char    *strtok(char *__restrict, const char *__restrict);
 
+#ifdef __CX
+char    *strtok_r(char *__restrict, const char *__restrict, char **__restrict);
+#endif
+
+size_t   strxfrm(char *__restrict, const char *__restrict, size_t);
+
+#ifdef __CX
+size_t   strxfrm_l(char *__restrict, const char *__restrict, size_t, locale_t);
+#endif
