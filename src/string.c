@@ -54,16 +54,19 @@ size_t NS(strnlen)(char *s, size_t n)
 
 int NS(strcmp)(const char *s1, const char *s2)
 {
-    while (*s1 && (*s1 == *s2))
-        s1++,s2++;
+    for (; *s1 && (*s1 == *s2); s1++,s2++);
     return (unsigned char)*s1 - (unsigned char)*s2;
 }
 
 int NS(strncmp)(const char *s1, const char *s2, size_t n)
 {
-    while (n-- && *s1 == *s2 && *s1)
-        s1++,s2++;
-    return (unsigned char)*s1 - (unsigned char)*s2;
+    size_t i = 0;
+    if (n == 0) return 0;
+    for (; i < n && s1[i] == s2[i] && s1[i]; i++);
+    if (i == n)
+        return (unsigned char)s1[i-1] - (unsigned char)s2[i-1];
+    else
+        return (unsigned char)s1[i] - (unsigned char)s2[i];
 }
 
 char *NS(strchr)(const char *s, int c)
@@ -91,7 +94,7 @@ size_t NS(strcspn)(const char *s, const char *reject)
 {
     char c;
     size_t i = 0;
-    while (i++,(c = *s++) && !NS(strchr)(reject, c))
+    while (i++,(c = *s++) && !NS(strchr)(reject, c));
     return i - 1;
 }
 

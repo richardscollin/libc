@@ -7,25 +7,35 @@ objects = \
 	  string.o \
 	  syscall.o \
 
+CC = cc
+C_INCLUDE_PATH = /home/collin/code/libc/include
+CFLAGS = -g -I$(C_INCLUDE_PATH) -nostdlib
 VPATH = src/
 DESTDIR = target/
 MACHINE = x86_64
+LIBNAME = libc.a
 
-all: $(addprefix $(DESTDIR), $(objects))
-	cc -g -c test.c
-	ld $^ test.o
+all: test
+
+test: lib
+	$(CC) $(CFLAGS) test.c $(LIBNAME) -o a.out
+
+lib: $(addprefix $(DESTDIR), $(objects)) 
+	$(AR) -rcs $(LIBNAME) $^
+
+.PHONY: dir
 
 dir:
 	mkdir -p $(DESTDIR)
 
-%crt1.o:
+%crt1.o: dir
 	as crt/$(MACHINE)/crt1.s -o $(DESTDIR)crt1.o
 
-%syscall.o:
+%syscall.o: dir
 	as crt/$(MACHINE)/syscall.s -o $(DESTDIR)syscall.o
 
 $(DESTDIR)%.o: %.c dir
-	cc -g -c $< -o $@
+	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
 	rm -rf $(DESTDIR)

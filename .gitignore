@@ -1,5 +1,7 @@
 
 tags
+libc.a
+libc.so
 a.out
 *.o
 target/*

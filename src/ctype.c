@@ -1,4 +1,5 @@
 
+#include "ns.h"
 #include "ctype.h"
 
 #define _DEL 0x7F
