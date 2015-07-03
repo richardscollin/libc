@@ -38,7 +38,7 @@ char *NS(strncat)(char *__restrict s1, const char *__restrict s2, size_t n)
     return s1;
 }
 
-size_t NS(strlen)(char *s)
+size_t NS(strlen)(const char *s)
 {
     size_t i = 0;
     while (i++,*s++);
@@ -87,7 +87,7 @@ size_t NS(strspn)(const char *s, const char *accept)
 {
     char c;
     size_t i = 0;
-    while (i++,(c = *s++) && NS(strchr)(accept, c))
+    while (i++,(c = *s++) && NS(strchr)(accept, c));
     return i - 1;
 }
 size_t NS(strcspn)(const char *s, const char *reject)
@@ -106,8 +106,8 @@ char *NS(strpbrk)(const char *s, const char *accept)
 
 char *NS(strstr)(const char *haystack, const char *needle)
 {
-    //Naive string search implementation
-    while(*haystack && NS(strcmp)(haystack, needle))
+    const size_t n = NS(strlen)(needle);
+    while(*haystack && NS(strncmp)(haystack, needle, n))
         haystack++;
     return (char *)((*haystack) ? haystack : NULL);
 }
@@ -135,21 +135,16 @@ char *NS(strtok_r)(char *str, const char *delim, char **saveptr)
      *
      * if the entry point is NULL that means we have reached the end
      * of the string and we should return null.
-     *
-     * I still think there is an edge case I'm not considering.
-     * We could get rid of the begin variable once this is tested.
      */
-    char *begin;
     if (str)
         *saveptr = str;
-    if (*saveptr)
+    if (!*saveptr || **saveptr == '\0')
         return NULL;
-    (*saveptr)++;// point to next character
-    begin = *saveptr + NS(strspn)(*saveptr, delim); 
-    *saveptr = NS(strpbrk)(begin, delim);
+    str = *saveptr + NS(strspn)(*saveptr, delim); 
+    *saveptr = NS(strpbrk)(str, delim);
     if (*saveptr)
-        **saveptr = '\0';
-    return begin;
+        *(*saveptr)++ = '\0';
+    return str;
 }
 
 void *NS(memcpy)(void *__restrict s1, const void *__restrict s2, size_t n)

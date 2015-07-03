@@ -24,7 +24,7 @@ char *NS(strpbrk)(const char *s, const char *accept);
 
 char *NS(strstr)(const char *haystack, const char *needle);
 
-size_t NS(strlen)(char *s);
+size_t NS(strlen)(const char *s);
 size_t NS(strnlen)(char *s, size_t n);
 
 char *NS(strerror)(int errnum);
