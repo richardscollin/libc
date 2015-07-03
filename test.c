@@ -17,7 +17,7 @@ static int TEST_RESULTS = 0;
 #define TESTCASE(X) if (X) {} \
                       else { TEST_RESULTS += 1; _exit(1);}
 
-//also copies null terminator
+/*also copies null terminator*/
 static void _strcpy(char *s1, char *s2)
 {
     while (*s1++ = *s2++);
@@ -62,9 +62,11 @@ TEST_CASES
 
 int main()
 {
-//#define X(test) reset_strings(); test();
-    //TEST_CASES
-//#undef X
+/*
+#define X(test) reset_strings(); test();
+    TEST_CASES
+#undef X
+*/
     reset_strings();
     test_memchr();
     reset_strings();

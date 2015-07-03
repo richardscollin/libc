@@ -4,14 +4,14 @@
 
 char *strcpy(char *__restrict s1, const char *__restrict s2)
 {
-    //http://stackoverflow.com/questions/14202201/implementation-of-strcpy-function
+    /* http://stackoverflow.com/questions/14202201/implementation-of-strcpy-function */
     char *c = s1;
     while ((*s1++ = *s2++));
     return c;
 }
 char *strncpy(char *__restrict s1, const char *__restrict s2, size_t n)
 {
-    //http://stackoverflow.com/questions/14159625/implementation-of-strncpy
+    /* http://stackoverflow.com/questions/14159625/implementation-of-strncpy */
     char *c = s1;
     while (n-- && (*s1++ = *s2++));
     for (; n--; *s1++ = '\0');
@@ -27,7 +27,7 @@ char *strcat(char *__restrict s1, const char *__restrict s2)
 
 char *strncat(char *__restrict s1, const char *__restrict s2, size_t n)
 {
-    //written in the man page
+    /* written in the man page */
     size_t s1_len = strlen(s1);
     size_t i;
 
@@ -111,7 +111,7 @@ char *strstr(const char *haystack, const char *needle)
 
 char *strerror(int errnum)
 {
-    //TODO
+    /*TODO*/
     return NULL;
 }
 

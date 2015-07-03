@@ -9,7 +9,7 @@ objects = \
 
 CC = cc
 C_INCLUDE_PATH = /home/collin/code/libc/include
-CFLAGS = -g -I$(C_INCLUDE_PATH) -nostdlib
+CFLAGS = -g -ansi -I$(C_INCLUDE_PATH) -nostdlib
 VPATH = src/
 DESTDIR = target/
 MACHINE = x86_64

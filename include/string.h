@@ -2,8 +2,8 @@
 #include <stddef.h>
 #include <locale.h>
 
-#define __CX
-//#define __XSI
+/*#define __CX*/
+/*#define __XSI*/
 
 #ifdef __XSI
 void    *memccpy(void *__restrict, const void *__restrict, int, size_t);
@@ -64,6 +64,7 @@ size_t   strspn(const char *, const char *);
 char    *strstr(const char *, const char *);
 char    *strtok(char *__restrict, const char *__restrict);
 
+char    *strtok_r(char *__restrict, const char *__restrict, char **__restrict);
 #ifdef __CX
 char    *strtok_r(char *__restrict, const char *__restrict, char **__restrict);
 #endif
