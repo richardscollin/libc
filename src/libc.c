@@ -3,8 +3,9 @@
  * just wanted it to link properly
  */
 extern int main();
-extern int exit();
+extern void exit(int);
 int __libc_start_main(void)
 {
-    return exit(main());
+    exit(main());
+    return 1;/* should not execute*/
 }

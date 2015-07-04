@@ -20,7 +20,7 @@ static int TEST_RESULTS = 0;
 /*also copies null terminator*/
 static void _strcpy(char *s1, char *s2)
 {
-    while (*s1++ = *s2++);
+    while ((*s1++ = *s2++));
 }
 
 static void reset_strings(void)
@@ -62,58 +62,10 @@ TEST_CASES
 
 int main()
 {
-/*
 #define X(test) reset_strings(); test();
     TEST_CASES
 #undef X
-*/
-    reset_strings();
-    test_memchr();
-    reset_strings();
-    test_memcmp();
-    reset_strings();
-    test_memcpy();
-    reset_strings();
-    test_memmove();
-    reset_strings();
-
-    test_memset();
-    reset_strings();
-    test_strcat();
-    reset_strings();
-    test_strchr();
-    reset_strings();
-    test_strcmp();
-    reset_strings();
-    test_strcoll();
-    reset_strings();
-    test_strcpy();
-    reset_strings();
-    test_strcspn();
-    reset_strings();
-    test_strdup();
-    reset_strings();
-    test_strlen();
-    reset_strings();
-    test_strncat();
-    reset_strings();
-    test_strncmp();
-    reset_strings();
-    test_strncpy();
-    reset_strings();
-    test_strndup();
-    reset_strings();
-    test_strnlen();
-    reset_strings();
-    test_strpbrk();
-    reset_strings();
-    test_strtchr();
-    reset_strings();
-    test_strspn();
-    reset_strings();
-    test_strstr();
-    reset_strings();
-    test_strtok();
+    return 0;
 }
 
 
@@ -165,6 +117,7 @@ int test_memset( void )
     char s[] = "xxxxxxxxx";
     TESTCASE( memset( s, 'o', 10 ) == s );
     TESTCASE( s[9] == 'o' );
+#pragma GCC diagnostic ignored "-Wmemset-transposed-args"
     TESTCASE( memset( s, '_', 0 ) == s );
     TESTCASE( s[0] == 'o' );
     TESTCASE( memset( s, '_', 1 ) == s );

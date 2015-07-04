@@ -1,17 +1,16 @@
 #include "string.h"
+#include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
 
 char *strcpy(char *__restrict s1, const char *__restrict s2)
 {
-    /* http://stackoverflow.com/questions/14202201/implementation-of-strcpy-function */
     char *c = s1;
     while ((*s1++ = *s2++));
     return c;
 }
 char *strncpy(char *__restrict s1, const char *__restrict s2, size_t n)
 {
-    /* http://stackoverflow.com/questions/14159625/implementation-of-strncpy */
     char *c = s1;
     while (n-- && (*s1++ = *s2++));
     for (; n--; *s1++ = '\0');
@@ -27,14 +26,10 @@ char *strcat(char *__restrict s1, const char *__restrict s2)
 
 char *strncat(char *__restrict s1, const char *__restrict s2, size_t n)
 {
-    /* written in the man page */
-    size_t s1_len = strlen(s1);
-    size_t i;
-
-    for (i = 0 ; i < n && s2[i] != '\0' ; i++)
-        s1[s1_len + i] = s2[i];
-    s1[s1_len + i] = '\0';
-
+    /* TODO check this */
+    char *s = s1 + strlen(s1);
+    for (; n && *s2; (*s = *s2), n--, s++, s2++);
+    *s = '\0';
     return s1;
 }
 
@@ -60,8 +55,7 @@ int strcmp(const char *s1, const char *s2)
 
 int strncmp(const char *s1, const char *s2, size_t n)
 {
-    if (!n--)
-        return 0;
+    if (!n--) return 0;
     for (; n && *s1++ == *s2++ && *s1; n--);
     return *(unsigned char *)s1 - *(unsigned char *)s2;
 }
@@ -104,22 +98,23 @@ char *strpbrk(const char *s, const char *accept)
 char *strstr(const char *haystack, const char *needle)
 {
     const size_t n = strlen(needle);
-    while(*haystack && strncmp(haystack, needle, n))
-        haystack++;
+    for(; *haystack && strncmp(haystack, needle, n); haystack++);
     return (char *)((*haystack) ? haystack : NULL);
 }
 
 char *strerror(int errnum)
 {
-    /*TODO*/
-    return NULL;
+    static char *__str_EINVAL = "Invalid argument";
+    switch (errnum) {
+        case EINVAL: return __str_EINVAL;
+        default: return NULL;
+    }
 }
 
 char *strtok(char *str, const char *delim)
 {
     static char *saveptr = NULL;
-    if (str)
-        saveptr = str;
+    if (str && (saveptr = str)) {}
     return strtok_r(str, delim, &saveptr);
 }
 
@@ -132,22 +127,19 @@ char *strtok_r(char *str, const char *delim, char **saveptr)
      * if the entry point is NULL that means we have reached the end
      * of the string and we should return null.
      */
-    if (str)
-        *saveptr = str;
+    if (str && (*saveptr = str)) {}
     if (!*saveptr || **saveptr == '\0')
         return NULL;
     str = *saveptr + strspn(*saveptr, delim); 
     *saveptr = strpbrk(str, delim);
-    if (*saveptr)
-        *(*saveptr)++ = '\0';
+    *saveptr && (*(*saveptr)++ = '\0');
     return str;
 }
 
 void *memcpy(void *__restrict s1, const void *__restrict s2, size_t n)
 {
     char *c1 = s1, *c2 = (char *)s2;
-    while (n--)
-        *c1++ = *c2++;
+    for (; n--; *c1++ = *c2++);
     return (void *)s1;
 }
 
@@ -172,7 +164,7 @@ int memcmp(const void *s1, const void *s2, size_t n)
 
 void *memchr(const void *s, int c, size_t n)
 {
-    const unsigned char *p = s;
+    unsigned const char *p = s;
     while(n-- && (c != *p++));
     return (c == *--p) ? (void *)p : NULL;
 }
@@ -180,7 +172,6 @@ void *memchr(const void *s, int c, size_t n)
 void *memset(void *s, int c, size_t n)
 {
     unsigned char *p = s;
-    while (n--)
-        *p++ = (unsigned char)c;
+    for (;n--; *p++ = (unsigned char)c);
     return s;
 }

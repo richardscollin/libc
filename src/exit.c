@@ -1,8 +1,9 @@
 
 #include <unistd.h>
-
 #include <sys/syscall.h>
-extern long __syscall();
+
+#include "common/_Noreturn.h"
+#include "common/syscall.h"
 
 static void (*cb[_SC_ATEXIT_MAX])(void);/*array of exit callbacks*/
 static int num_cb;/*number of exit callbacks*/
@@ -22,9 +23,8 @@ void exit(int status)
     _exit(status);
 }
 
-void _Noreturn _exit(int status)
+_Noreturn void _exit(int status)
 {
-    __syscall(__NR_exit, status);
+    syscall(__NR_exit, status);
     while(1);/*gets rid of spurios warning*/
 }
-

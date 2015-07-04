@@ -52,6 +52,7 @@ char    *strncpy(char *__restrict, const char *__restrict, size_t);
 char    *strndup(const char *, size_t);
 size_t   strnlen(const char *, size_t);
 #endif
+size_t   strnlen(const char *, size_t);
 
 char    *strpbrk(const char *, const char *);
 char    *strrchr(const char *, int);

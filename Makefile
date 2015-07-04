@@ -1,5 +1,6 @@
 
 objects = \
+	  __syscall.o \
 	  crt1.o \
 	  libc.o \
 	  ctype.o \
@@ -7,9 +8,9 @@ objects = \
 	  string.o \
 	  syscall.o \
 
-CC = cc
+CC = gcc
 C_INCLUDE_PATH = /home/collin/code/libc/include
-CFLAGS = -g -ansi -I$(C_INCLUDE_PATH) -nostdlib
+CFLAGS = -g -std=c89 -Wall -Wextra -Wpedantic -I$(C_INCLUDE_PATH) -nostdlib
 VPATH = src/
 DESTDIR = target/
 MACHINE = x86_64
@@ -36,8 +37,8 @@ dir:
 %crt1.o: dir
 	as crt/$(MACHINE)/crt1.s -o $(DESTDIR)crt1.o
 
-%syscall.o: dir
-	as crt/$(MACHINE)/syscall.s -o $(DESTDIR)syscall.o
+%__syscall.o: dir
+	as crt/$(MACHINE)/__syscall.s -o $(DESTDIR)__syscall.o
 
 $(DESTDIR)%.o: %.c dir
 	$(CC) $(CFLAGS) -c $< -o $@
