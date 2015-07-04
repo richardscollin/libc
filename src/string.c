@@ -1,7 +1,5 @@
-#include "string.h"
-#include <errno.h>
-#include <stdio.h>
-#include <stdlib.h>
+#include <string.h>
+#include <errno.h> /* for strerror */
 
 char *strcpy(char *__restrict s1, const char *__restrict s2)
 {
@@ -124,15 +122,16 @@ char *strtok_r(char *str, const char *delim, char **saveptr)
      * saveptr is used to remember where the next entry point is
      * and to encode the end of the string.
      *
-     * if the entry point is NULL that means we have reached the end
-     * of the string and we should return null.
+     * if the entry point is NULL or points to the NULL character 
+     * that means we have reached the end of the string and 
+     * we should return null.
+     *
      */
-    if (str && (*saveptr = str)) {}
-    if (!*saveptr || **saveptr == '\0')
-        return NULL;
+    if (str) *saveptr = str;
+    if (!*saveptr || **saveptr == '\0') return NULL;
     str = *saveptr + strspn(*saveptr, delim); 
     *saveptr = strpbrk(str, delim);
-    *saveptr && (*(*saveptr)++ = '\0');
+    if (*saveptr) *(*saveptr)++ = '\0';
     return str;
 }
 
@@ -146,11 +145,8 @@ void *memcpy(void *__restrict s1, const void *__restrict s2, size_t n)
 void *memmove(void *s1, const void *s2, size_t n)
 {
     char *c1 = s1, *c2 = (char *)s2;
-    if (s2 > s1)
-        memcpy(s1, s2, n);
-    else
-        while (n--)
-            c1[n] = c2[n];
+    if (s2 > s1) memcpy(s1, s2, n);
+    else while (n--) c1[n] = c2[n];
     return s1;
 }
 

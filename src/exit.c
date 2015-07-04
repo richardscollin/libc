@@ -26,5 +26,5 @@ void exit(int status)
 _Noreturn void _exit(int status)
 {
     syscall(__NR_exit, status);
-    while(1);/*gets rid of spurios warning*/
+    while (1); /* remove warning */
 }
