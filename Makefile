@@ -7,6 +7,7 @@ objects = \
 	  exit.o \
 	  string.o \
 	  syscall.o \
+	  unistd.o \
 
 CC = gcc
 C_INCLUDE_PATH = /home/collin/code/libc/include
@@ -22,7 +23,7 @@ test: lib
 	$(CC) $(CFLAGS) test.c $(LIBNAME) -o a.out
 
 lib: $(addprefix $(DESTDIR), $(objects)) 
-	$(AR) -rcs $(LIBNAME) $^
+	$(AR) -rcs $(LIBNAME) $^ lib/unistd.a
 
 .PHONY: stats
 stats: lib

@@ -2,7 +2,6 @@
 #include <unistd.h>
 #include <sys/syscall.h>
 
-#include "common/_Noreturn.h"
 #include "common/syscall.h"
 
 static void (*cb[_SC_ATEXIT_MAX])(void);/*array of exit callbacks*/
@@ -21,10 +20,5 @@ void exit(int status)
         cb[i++]();/*call all callbacks*/
     /*TODO flush and close all filehandles*/
     _exit(status);
-}
-
-_Noreturn void _exit(int status)
-{
-    syscall(__NR_exit, status);
-    while (1); /* remove warning */
+    while (1); /* silence warning */
 }

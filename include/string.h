@@ -1,6 +1,6 @@
 
 #include <stddef.h>
-#include <locale.h>
+/*#include <locale.h>*/
 
 /*#define __CX*/
 /*#define __XSI*/

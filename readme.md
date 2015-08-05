@@ -53,4 +53,14 @@ Progress:
 [X] string
 [] time
 
-*Note: This will probably never be finished.
+* Note: This will probably never be finished.
+
+THANKS:
+To the PDCLib project and Musl libc projects. I've used pieces of code that
+is in the public domain from both of these projects.
+
+I'm going to temporarily include unistd from musl libc. This is not in the
+public domain but makes this possible to run without writing a lot of boring
+code. See COPYRIGHT.
+
+
