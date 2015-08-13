@@ -59,7 +59,7 @@ static void reset_strings(void)
 TEST_CASES
 #undef X
 
-int main()
+int test_string()
 {
 #define X(test) reset_strings(); test();
     TEST_CASES

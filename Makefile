@@ -20,7 +20,7 @@ LIBNAME = libc.a
 all: test stats
 
 test: lib
-	$(CC) $(CFLAGS) test_string.c $(LIBNAME) -o a.out
+	$(CC) $(CFLAGS) test_string.c test_stdlib.c test.c $(LIBNAME) -o a.out
 
 lib: $(addprefix $(DESTDIR), $(objects)) 
 	$(AR) -rcs $(LIBNAME) $^ lib/unistd.a
