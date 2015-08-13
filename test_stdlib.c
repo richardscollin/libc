@@ -38,8 +38,12 @@ int test_strtod()
     TESTCASE(endp == s + 9);
     TESTCASE(strtod("1000", NULL) == 1000);
     TESTCASE(strtod("8700", NULL) == 8700);
+    TESTCASE(strtod("+500", NULL) == 500);
+    TESTCASE(strtod("-500", NULL) == -500);
     TESTCASE(strtod("0.5", NULL) == 0.5);
-
+    TESTCASE(strtod(".5", NULL) == .5);
+    TESTCASE(strtod("-.5", NULL) == -.5);
+    TESTCASE(strtod("+.5", NULL) == .5);
     TESTCASE(strtod("0.75", NULL) == 0.75);
 
     return 0;
