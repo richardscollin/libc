@@ -32,8 +32,16 @@ int test_stdlib()
 
 int test_strtod()
 {
-    TESTCASE(strtod("0.5", NULL) == 0.5);
+    char *endp;
+    char * s = "    900.0  ";
+    TESTCASE(strtod(s, &endp) == 900.0);
+    TESTCASE(endp == s + 9);
     TESTCASE(strtod("1000", NULL) == 1000);
+    TESTCASE(strtod("8700", NULL) == 8700);
+    TESTCASE(strtod("0.5", NULL) == 0.5);
+
+    TESTCASE(strtod("0.75", NULL) == 0.75);
+
     return 0;
 }
 

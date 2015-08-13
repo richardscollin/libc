@@ -9,10 +9,20 @@ char *strcpy(char *__restrict s1, const char *__restrict s2)
 }
 char *strncpy(char *__restrict s1, const char *__restrict s2, size_t n)
 {
+    /*
     char *c = s1;
     while (n-- && (*s1++ = *s2++));
     for (; n--; *s1++ = '\0');
     return c;
+    */
+    size_t i;
+
+    for (i = 0; i < n && s2[i] != '\0'; i++)
+        s1[i] = s2[i];
+    for ( ; i < n; i++)
+        s1[i] = '\0';
+
+    return s1;
 }
 char *strcat(char *__restrict s1, const char *__restrict s2)
 {

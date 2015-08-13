@@ -6,10 +6,11 @@ objects = \
 	  ctype.o \
 	  exit.o \
 	  string.o \
+	  stdlib.o \
 	  syscall.o \
 	  unistd.o \
 
-CC = gcc
+CC = clang
 C_INCLUDE_PATH = /home/collin/code/libc/include
 CFLAGS = -g -std=c89 -Wall -Wextra -Wpedantic -I$(C_INCLUDE_PATH) -nostdlib
 VPATH = src/
