@@ -84,16 +84,19 @@ void *bsearch(const void *key, const void *base,
         size_t nmemb, size_t size,
         int (*compar)(const void *, const void *))
 {
-    size_t target = nmemb / 2;
-    uintptr_t center = (uintptr_t) base + target;
-    int ans = compar(key, (void*)center);
+    while (1) {
+        size_t mid = nmemb / 2;
+        uintptr_t center = (uintptr_t) base + mid * size;
+        int ans = compar(key, (void*)center);
 
-    if (ans < 0) {
-        return bsearch(key, base, target, size, compar);
-    } else if (ans > 0) {
-        return bsearch(key, (void*)center, target, size, compar);
-    } else { /* ans == 0 */
-        return (void*)center;
+        if (ans < 0) {
+            nmemb = mid;
+        } else if (ans > 0) {
+            base = (void*)(center + size);
+            nmemb = nmemb - mid;
+        } else { /* ans == 0 */
+            return (void*)center;
+        }
     }
 }
 
