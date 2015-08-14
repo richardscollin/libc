@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include <ctype.h>
 
+#include <math.h>
+
 #include <string.h>
 
 double strtod(const char *s, char **endptr)
@@ -33,6 +35,18 @@ double strtod(const char *s, char **endptr)
             }
             seen_decimal = 1;
             i++;
+        }
+        if (tolower(s[i]) == 'e') {
+            /* TODO fix this terrible hack*/
+            double multiplier = 1;
+            int exponent = (int)strtod(s + ++i, endptr);
+            int j;
+            if (exponent > 0)
+                for (j = 0; j < exponent; j++, multiplier *= 10);
+            else
+                for (j = 0; j < -exponent; j++, multiplier /= 10);
+            total *= multiplier;
+            goto done;
         } else if (!isdigit(s[i])) {
             /* done - saw something that isn't a digit*/
             goto done;

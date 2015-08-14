@@ -46,6 +46,15 @@ int test_strtod()
     TESTCASE(strtod("+.5", NULL) == .5);
     TESTCASE(strtod("0.75", NULL) == 0.75);
 
+    /* Tests with Exponents */
+    TESTCASE(strtod("1e3", NULL) == 1000);
+    TESTCASE(strtod("1E5", NULL) == 100000);
+    TESTCASE(strtod("1.5e5", NULL) == 150000);
+    TESTCASE(strtod("1.e5", NULL) == 100000);
+    TESTCASE(strtod("1.e+5", NULL) == 100000);
+    TESTCASE(strtod("5.e-1", NULL) == .5);
+    TESTCASE(strtod("1.2345675e5", NULL) == 123456.75);
+
     return 0;
 }
 
