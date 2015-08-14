@@ -17,6 +17,7 @@ static int TEST_RESULTS = 0;
 #define TEST_CASES \
     X(test_strtod) \
     X(test_bsearch) \
+    X(test_div) \
 
 
 #define X(test) int test(void);
@@ -82,5 +83,12 @@ int test_bsearch()
             == &array[9]);
 
     return 0;
+}
+
+int test_div()
+{
+    div_t a;
+    a = div(-5, 3);
+    TESTCASE(a.quot == -1 && a.rem == -2);
 }
 

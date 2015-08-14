@@ -69,6 +69,7 @@ done:
     return total;
 }
 
+#undef atof
 double atof(const char *s)
 {
     return strtod(s, (char **)NULL);
@@ -109,4 +110,20 @@ long long int llabs(long long int j)
     return (j < 0) ? -j : j;
 }
 #endif
+
+div_t div(int num, int denom)
+{
+    div_t result;
+    result.quot = num / denom;
+    result.rem = num - (result.quot * denom);
+    return result;
+}
+
+ldiv_t ldiv(long num, long denom)
+{
+    ldiv_t result;
+    result.quot = num / denom;
+    result.rem = num - (result.quot * denom);
+    return result;
+}
 
