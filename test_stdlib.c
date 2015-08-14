@@ -16,6 +16,7 @@ static int TEST_RESULTS = 0;
 
 #define TEST_CASES \
     X(test_strtod) \
+    X(test_bsearch) \
 
 
 #define X(test) int test(void);
