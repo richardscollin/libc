@@ -28,7 +28,8 @@ lib: $(addprefix $(DESTDIR), $(objects))
 
 .PHONY: stats
 stats: lib
-	wc -l src/string.c > info
+	wc -l src/stdlib.c > info
+	wc -l src/string.c >> info
 	du -h libc.a >> info
 	cat info
 
