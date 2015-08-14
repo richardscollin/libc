@@ -58,3 +58,27 @@ int test_strtod()
     return 0;
 }
 
+static int compare(const void *a, const void *b)
+{
+    return *(int*)a - *(int*)b;
+}
+
+int test_bsearch()
+{
+    int array[] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+    int a0 = 0;
+    int a1 = 1;
+    int a4 = 4;
+    int a9 = 9;
+
+    TESTCASE(bsearch(&a0, array, sizeof(array) / sizeof(array[0]), sizeof(array[0]), compare)
+            == array + 0);
+    TESTCASE(bsearch(&a1, array, sizeof(array) / sizeof(array[0]), sizeof(array[0]), compare)
+            == array + 1);
+    TESTCASE(bsearch(&a4, array, sizeof(array) / sizeof(array[0]), sizeof(array[0]), compare)
+            == array + 4);
+    TESTCASE(bsearch(&a9, array, sizeof(array) / sizeof(array[0]), sizeof(array[0]), compare)
+            == array + 9);
+
+}
+

@@ -1,6 +1,7 @@
 
 #include <stdlib.h>
 #include <ctype.h>
+#include <stdint.h>
 
 #include <math.h>
 
@@ -76,6 +77,23 @@ done:
 double atof(const char *s)
 {
     return strtod(s, (char **)NULL);
+}
+
+void *bsearch(const void *key, const void *base,
+        size_t nmemb, size_t size,
+        int (*compar)(const void *, const void *))
+{
+    size_t target = nmemb / 2;
+    uintptr_t center = (uintptr_t) base + target;
+    int ans = compar(key, (void*)center);
+
+    if (ans < 0) {
+        return bsearch(key, base, target, size, compar);
+    } else if (ans > 0) {
+        return bsearch(key, (void*)center, target, size, compar);
+    } else { /* ans == 0 */
+        return (void*)center;
+    }
 }
 
 
