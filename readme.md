@@ -37,21 +37,21 @@ just put it on the same line anyway.
 
 Progress:
 
-[X] assert
-[] ctype
-[] errno
-[] float
-[] limits
-[] locale
-[] math
-[] setjmp
-[] signal
-[] stdarg
-[] stdef
-[] stdio
-[] stdlib
-[X] string
-[] time
+- [X] assert
+- [X] ctype
+- [] errno
+- [] float
+- [] limits
+- [] locale
+- [] math
+- [] setjmp
+- [] signal
+- [] stdarg
+- [] stdef
+- [] stdio
+- [] stdlib
+- [X] string
+- [] time
 
 * Note: This will probably never be finished.
 
