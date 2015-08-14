@@ -73,6 +73,7 @@ int test_bsearch()
     int a1 = 1;
     int a4 = 4;
     int a9 = 9;
+    int a15 = 15;
 
     TESTCASE(bsearch(&a0, array, sizeof(array) / sizeof(array[0]), sizeof(array[0]), compare)
             == &array[0]);
@@ -82,6 +83,8 @@ int test_bsearch()
             == &array[4]);
     TESTCASE(bsearch(&a9, array, sizeof(array) / sizeof(array[0]), sizeof(array[0]), compare)
             == &array[9]);
+    TESTCASE(bsearch(&a15, array, sizeof(array) / sizeof(array[0]), sizeof(array[0]), compare)
+            == NULL);
 
     return 0;
 }
