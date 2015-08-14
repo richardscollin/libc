@@ -17,6 +17,7 @@ static int TEST_RESULTS = 0;
 #define TEST_CASES \
     X(test_strtod) \
     X(test_bsearch) \
+    X(test_qsort) \
     X(test_div) \
 
 
@@ -85,10 +86,25 @@ int test_bsearch()
     return 0;
 }
 
+int test_qsort()
+{
+    int array[] = { 9, 2, 1, 3, 4, 8, 7, 6, 5, 0 };
+    int sorted[] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+    unsigned long i;
+
+    qsort(array, sizeof(array)/sizeof(array[0]), sizeof(array[0]), compare);
+
+    for (i = 0; i < sizeof(array) / sizeof(array[0]); i++) {
+        TESTCASE(array[i] == sorted[i]);
+    }
+    return 0;
+}
+
 int test_div()
 {
     div_t a;
     a = div(-5, 3);
     TESTCASE(a.quot == -1 && a.rem == -2);
+    return 0;
 }
 

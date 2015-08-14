@@ -29,6 +29,9 @@ void *bsearch(const void *key, const void *base,
         size_t nmemb, size_t size,
         int (*compar)(const void *, const void *));
 
+void qsort(void *base, size_t nmemb, size_t size,
+        int (*compar)(const void *, const void *));
+
 div_t div(int num, int denom);
 ldiv_t ldiv(long num, long denom);
 
