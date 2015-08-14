@@ -79,6 +79,7 @@ double atof(const char *s)
     return strtod(s, (char **)NULL);
 }
 
+
 void *bsearch(const void *key, const void *base,
         size_t nmemb, size_t size,
         int (*compar)(const void *, const void *))
@@ -97,4 +98,16 @@ void *bsearch(const void *key, const void *base,
     }
 }
 
+int abs(int j)
+{
+    return (j < 0) ? -j : j;
+}
+long int labs(long int j)
+{
+    return (j < 0) ? -j : j;
+}
+long long int llabs(long long int j)
+{
+    return (j < 0) ? -j : j;
+}
 
