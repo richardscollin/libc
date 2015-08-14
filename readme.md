@@ -53,7 +53,7 @@ Progress:
 - [X] string
 - [] time
 
-* Note: This will probably never be finished.
+Note: This will probably never be finished.
 
 THANKS:
 To the PDCLib project and Musl libc projects. I've used pieces of code that
