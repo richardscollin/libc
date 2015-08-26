@@ -80,20 +80,22 @@ void *bsearch(const void *key, const void *base,
         size_t nmemb, size_t size,
         int (*compar)(const void *, const void *))
 {
-    while (1) {
+    size_t lo = 0, hi = nmemb;
+    while (lo <= hi) {
         size_t mid = nmemb / 2;
         uintptr_t center = (uintptr_t) base + mid * size;
         int ans = compar(key, (void*)center);
 
         if (ans < 0) {
-            nmemb = mid;
+            hi = lo + (nmemb = mid) - 1;
         } else if (ans > 0) {
-            base = (void*)(center + size);
-            nmemb = nmemb - mid;
+            base = (void*)(center + (lo = size));
+            nmemb -= mid;
         } else { /* ans == 0 */
             return (void*)center;
         }
     }
+    return NULL;
 }
 
 static void memswap(void *a, void *b, size_t size)
