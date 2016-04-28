@@ -1,12 +1,10 @@
-#ifdef __restrict_h
-#define __restrict_h
-
+#ifdef __need_restrict
+#ifndef __restrict
 #if __STDC_VERSION__ >= 199901L
-/*C99*/
 #define __restrict restrict
 #else
-/*C89*/
 #define __restrict
 #endif /* STDC_VERSION */
-
-#endif /* ___restrict_h */
+#endif /* __restrict */
+#undef __need_restrict
+#endif /* ___need_restrict */

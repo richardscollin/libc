@@ -4,7 +4,6 @@ objects = \
 	  crt1.o \
 	  libc.o \
 	  ctype.o \
-	  exit.o \
 	  string.o \
 	  stdlib.o \
 	  syscall.o \

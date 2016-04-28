@@ -1,23 +1,18 @@
 
-#include "ctype.h"
+//#include "ctype.h"
 
 #define _DEL 0x7F
 #define _US 0x1F
 #define _CASE_MASK 0x20
 
-int isalnum(int c)
+int islower(int c)
 {
-    return isalpha(c) || isdigit(c);
+    return 'a' <= c && c <= 'z';
 }
 
-int isalpha(int c)
+int isupper(int c)
 {
-    return isupper(c) || islower(c);
-}
-
-int iscntrl(int c)
-{
-    return ('\0' <= c && c <= _US) || c == _DEL;
+    return 'A' <= c && c <= 'Z';
 }
 
 int isdigit(int c)
@@ -25,19 +20,29 @@ int isdigit(int c)
     return '0' <= c && c <= '9';
 }
 
-int isgraph(int c)
+int isalpha(int c)
 {
-    return isprint(c) && c != ' ';
+    return isupper(c) || islower(c);
 }
 
-int islower(int c)
+int isalnum(int c)
 {
-    return 'a' <= c && c <= 'z';
+    return isalpha(c) || isdigit(c);
+}
+
+int iscntrl(int c)
+{
+    return ('\0' <= c && c <= _US) || c == _DEL;
 }
 
 int isprint(int c)
 {
     return _US < c && c < _DEL;
+}
+
+int isgraph(int c)
+{
+    return isprint(c) && c != ' ';
 }
 
 int ispunct(int c)
@@ -48,11 +53,6 @@ int ispunct(int c)
 int isspace(int c)
 {
     return c == ' ' || ('\t' <= c && c <= '\r');
-}
-
-int isupper(int c)
-{
-    return 'A' <= c && c <= 'Z';
 }
 
 int isxdigit(int c)

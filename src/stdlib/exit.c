@@ -2,7 +2,11 @@
 #include <unistd.h>
 #include <sys/syscall.h>
 
-#include "common/syscall.h"
+//#include "common/syscall.h"
+void _exit(int status)
+{
+    while(1);
+}
 
 static void (*cb[_SC_ATEXIT_MAX])(void);/*array of exit callbacks*/
 static int num_cb;/*number of exit callbacks*/
